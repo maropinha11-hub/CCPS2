@@ -60,6 +60,7 @@ void main() {
 
 const finalFragment = /* glsl */ `
 precision highp sampler3D;
+out vec4 fragColor;
 uniform sampler2D tScene;
 uniform sampler2D tBloom;
 uniform sampler2D tDepth;
@@ -190,7 +191,7 @@ void main() {
     vec3 levels = vec3(31.0, 63.0, 31.0);
     c = floor(clamp(c, 0.0, 1.0) * levels + bayer4(srcPx)) / levels;
   }
-  gl_FragColor = vec4(clamp(c, 0.0, 1.0), src.a);
+  fragColor = vec4(clamp(c, 0.0, 1.0), src.a);
 }
 `;
 
@@ -225,6 +226,7 @@ export class PostPass {
     const emptyLut = new THREE.Data3DTexture(new Uint8Array([0, 0, 0, 255]), 1, 1, 1);
     emptyLut.needsUpdate = true;
     this.material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
       vertexShader: quadVertex,
       fragmentShader: finalFragment,
       depthTest: false,

@@ -88,7 +88,7 @@ export class Studio {
   private bakeRun: { signature: string; cancel: boolean; done: Promise<void> } | null = null;
   private bakeTimer: number | null = null;
   /** Bake in the background after changes (off in e2e runs, which bake on request). */
-  autoBake = true;
+  autoBake = false;
   /** Override the bake settings (tests bake small maps). */
   bakeOverride: Partial<BakeSettings> | null = null;
   bakeStatus: { state: 'off' | 'waiting' | 'baking' | 'done' | 'failed'; progress: number; ms: number; timings: Record<string, number> } = {
